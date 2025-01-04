@@ -18,6 +18,10 @@ jobs:
     - uses: actions/checkout@v4
     - uses: cygwin/cygwin-install-action@master
       with:
-        packages: subversion make gcc-core gcc-g++ autoconf autoconf-archive automake zlib-devel libmpg123-devel libogg-devel libvorbis-devel libsndfile-devel libflac-devel libSDL2-devel libportaudio-devel libportaudiocpp-devel libpulse-devel help2man doygen graphviz curl p7zip zip unzip perl-XML-XPath
+        packages: make
+    - name: setup parallel make
+      run: bash -c 'echo MAKEFLAGS=-j${NUMBER_OF_PROCESSORS} >> $GITHUB_ENV'
+    - name: test
+      run: bash -c 'set'
     - name: bash
       run: bash -c 'ls -la'
