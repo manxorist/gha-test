@@ -39,6 +39,7 @@ jobs:
           sysctl hw.ncpu
           sysctl hw.physmem
           sysctl hw.usermem
+          locale -a
           command -v env
           /usr/bin/env bash -c echo "foo"
           
