@@ -30,7 +30,7 @@ jobs:
         usesh: true
         sync: rsync
         copyback: false
-        prepage: |
+        prepare: |
           pkg upgrade -y
           pkg install -y subversion p5-XML-XPath git mawk gmake pkgconf autoconf autoconf-archive automake libtool help2man doxygen mpg123 libogg libvorbis flac libsndfile pulseaudio portaudio sdl2
         run: |
