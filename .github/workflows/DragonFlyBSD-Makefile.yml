@@ -11,10 +11,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { version: '6.4', deps: sys   }
+          - { version: '6.4', lang: 'C'           }
+          - { version: '6.4', lang: 'en_US.UTF-8' }
 
     concurrency:
-      group: ${{github.ref}}-${{github.workflow}}-${{matrix.version}}-${{matrix.deps}}
+      group: ${{github.ref}}-${{github.workflow}}-${{matrix.version}}-${{matrix.lang}}
       cancel-in-progress: true
 
     runs-on: ubuntu-24.04
@@ -24,7 +25,10 @@ jobs:
       uses: actions/checkout@v4
     - name: Build and Test
       uses: vmactions/dragonflybsd-vm@v1.1.0
+      env:
+        LANG: ${{matrix.lang}}
       with:
+        envs: 'LANG'
         usesh: true
         sync: rsync
         copyback: false
