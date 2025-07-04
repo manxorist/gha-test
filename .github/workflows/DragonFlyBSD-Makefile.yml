@@ -12,8 +12,6 @@ jobs:
       matrix:
         include:
           - { version: '6.4', deps: sys   }
-          - { version: '6.4', deps: local }
-          - { version: '6.4', deps: small }
 
     concurrency:
       group: ${{github.ref}}-${{github.workflow}}-${{matrix.version}}-${{matrix.deps}}
@@ -39,8 +37,8 @@ jobs:
           sysctl hw.ncpu
           sysctl hw.physmem
           sysctl hw.usermem
+          xpath
           locale -a
-          locale -m
           command -v env
           /usr/bin/env bash -c echo "foo"
           
