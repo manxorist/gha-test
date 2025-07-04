@@ -35,6 +35,7 @@ jobs:
           pkg install -y subversion p5-XML-XPath git mawk gmake pkgconf autoconf autoconf-archive automake libtool help2man doxygen mpg123 libogg libvorbis flac libsndfile portaudio sdl2
         run: |
           whoami
+          uname -s
           sysctl hw.ncpu
           sysctl hw.physmem
           sysctl hw.usermem
