@@ -68,6 +68,9 @@ jobs:
         sync_files: false
         shutdown_vm: false
         run: |
+          git init .
+          git fetch --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${GITHUB_REF_NAME}
+          git checkout --force -B ${GITHUB_REF_NAME} refs/remotes/origin/${GITHUB_REF_NAME}
           pwd
           ls -al
           ls -la /boot/
