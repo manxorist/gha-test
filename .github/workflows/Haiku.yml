@@ -67,6 +67,8 @@ jobs:
         sync_files: false
         shutdown_vm: false
         run: |
+          mkdir -p '/home/runner/' && ln -sf '/boot/home/' '/home/runner/work' && mkdir -p '/home/runner/work/gha-test/gha-test'
+          cd '/home/runner/work/gha-test/gha-test'
           pwd
           df -h .
           df -h
