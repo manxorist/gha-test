@@ -72,7 +72,7 @@ jobs:
           ls -la
           mkdir baz
           ls -la
-          touch foo
+          sudo touch foo
           ls -la
           git init .
           git fetch --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${GITHUB_REF_NAME}
