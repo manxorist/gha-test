@@ -20,6 +20,8 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
     - name: Startup VM
       uses: cross-platform-actions/action@v0.28.0
       with:
@@ -44,23 +46,6 @@ jobs:
         run: |
           pkgman refresh
           pkgman install -y subversion git perl gawk make pkgconfig mpg123_devel libogg_devel libvorbis_devel flac_devel libsndfile_devel portaudio_devel libsdl2_devel autoconf autoconf_archive libtool libtool_libltdl doxygen help2man
-    - name: Checkout
-      uses: |
-        cross-platform-actions/action@v0.28.0
-        actions/checkout@v4
-      with:
-        architecture: x86_64
-        memory: 4G
-        operating_system: haiku
-        version: ${{matrix.version}}
-        shell: bash
-        sync_files: false
-        shutdown_vm: false
-        run: |
-          ls -al
-          ls -la /system/packages/administrative/
-          autoconf --help
-          automake --help
     - name: Build
       uses: cross-platform-actions/action@v0.28.0
       with:
@@ -72,7 +57,13 @@ jobs:
         sync_files: false
         shutdown_vm: false
         run: |
+          pwd
           ls -al
+          ls -la /boot/
+          ls -la /boot/home/
+          ls -la /home/
+          ls -la /home/runner/
+          ls -la /home/runner/work/
           ls -la /system/packages/administrative/
           autoconf --help
           automake --help
