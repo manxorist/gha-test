@@ -41,7 +41,7 @@ jobs:
         operating_system: haiku
         version: ${{matrix.version}}
         shell: bash
-        sync_files: runner-to-vm
+        sync_files: false
         shutdown_vm: false
         run: true
     - name: Install dependencies
@@ -56,6 +56,32 @@ jobs:
         shutdown_vm: false
         run: |
           pkgman refresh
+    - name: Fixup VM
+      uses: cross-platform-actions/action@v0.28.0
+      with:
+        architecture: x86_64
+        memory: 4G
+        operating_system: haiku
+        version: ${{matrix.version}}
+        shell: bash
+        sync_files: false
+        shutdown_vm: false
+        run: |
+          pwd
+          rm -rf '/home/runner/work'
+          mkdir -p '/home/runner/' && ln -sf '/boot/home/work' '/home/runner/work' && mkdir -p '/home/runner/work/gha-test/gha-test'
+          cd '/home/runner/work/gha-test/gha-test'
+    - name: Sync files to VM
+      uses: cross-platform-actions/action@v0.28.0
+      with:
+        architecture: x86_64
+        memory: 4G
+        operating_system: haiku
+        version: ${{matrix.version}}
+        shell: bash
+        sync_files: runner-to-vm
+        shutdown_vm: false
+        run: true
     - name: Build
       uses: cross-platform-actions/action@v0.28.0
       with:
