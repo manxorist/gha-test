@@ -1,0 +1,95 @@
+name: Haiku
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { version: 'r1beta5' }
+
+    concurrency:
+      group: ${{github.ref}}-${{github.workflow}}-${{matrix.version}}
+      cancel-in-progress: true
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Startup VM
+      uses: cross-platform-actions/action@v0.28.0
+      with:
+        architecture: x86_64
+        memory: 4G
+        operating_system: haiku
+        version: ${{matrix.version}}
+        shell: bash
+        sync_files: runner-to-vm
+        shutdown_vm: false
+        run: true
+    - name: Install dependencies
+      uses: cross-platform-actions/action@v0.28.0
+      with:
+        architecture: x86_64
+        memory: 4G
+        operating_system: haiku
+        version: ${{matrix.version}}
+        shell: bash
+        sync_files: false
+        shutdown_vm: false
+        run: |
+          pkgman refresh
+          pkgman full-sync -y
+          pkgman install -y cmake
+    - name: Shutdown VM
+      uses: cross-platform-actions/action@v0.28.0
+      with:
+        architecture: x86_64
+        memory: 4G
+        operating_system: haiku
+        version: ${{matrix.version}}
+        shell: bash
+        sync_files: false
+        shutdown_vm: true
+        run: true
+    - name: Startup VM
+      uses: cross-platform-actions/action@v0.28.0
+      with:
+        architecture: x86_64
+        memory: 4G
+        operating_system: haiku
+        version: ${{matrix.version}}
+        shell: bash
+        sync_files: runner-to-vm
+        shutdown_vm: false
+        run: true
+    - name: Build
+      uses: cross-platform-actions/action@v0.28.0
+      with:
+        architecture: x86_64
+        memory: 4G
+        operating_system: haiku
+        version: ${{matrix.version}}
+        shell: bash
+        sync_files: false
+        shutdown_vm: false
+        run: |
+          ls -al
+          cmake --help
+    - name: Shutdown VM
+      uses: cross-platform-actions/action@v0.28.0
+      with:
+        architecture: x86_64
+        memory: 4G
+        operating_system: haiku
+        version: ${{matrix.version}}
+        shell: bash
+        sync_files: false
+        shutdown_vm: true
+        run: true
