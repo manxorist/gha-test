@@ -67,8 +67,7 @@ jobs:
         sync_files: false
         shutdown_vm: false
         run: |
-          mv '/home/runner/work/*' '/boot/home/'
-          rmdir '/home/runner/work/'
+          rm -rf '/home/runner/work'
           mkdir -p '/home/runner/' && ln -sf '/boot/home/work' '/home/runner/work' && mkdir -p '/home/runner/work/gha-test/gha-test'
           cd '/home/runner/work/gha-test/gha-test'
           pwd
