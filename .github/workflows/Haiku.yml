@@ -80,7 +80,7 @@ jobs:
         shell: bash
         sync_files: runner-to-vm
         shutdown_vm: false
-        run: true
+        run: chown -R $(id -u):$(id -g) $(pwd)
     - name: Build
       uses: cross-platform-actions/action@v0.28.0
       with:
