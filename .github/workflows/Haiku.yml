@@ -69,12 +69,11 @@ jobs:
         shutdown_vm: false
         run: |
           whoami
-          sudo mkdir bar
           ls -la
-          sudo rmdir bar
           mkdir baz
+          ls -la
           touch foo
-          rm foo
+          ls -la
           git init .
           git fetch --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${GITHUB_REF_NAME}
           git checkout --force -B ${GITHUB_REF_NAME} refs/remotes/origin/${GITHUB_REF_NAME}
