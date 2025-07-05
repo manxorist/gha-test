@@ -68,9 +68,8 @@ jobs:
         shutdown_vm: false
         run: |
           pwd
-          rm -rf '/home/runner/work'
-          mkdir -p '/home/runner/' && ln -sf '/boot/home/work' '/home/runner/work' && mkdir -p '/home/runner/work/gha-test/gha-test'
-          cd '/home/runner/work/gha-test/gha-test'
+          mv '/home/runner/work' '/boot/home/work'
+          ln -sf '/boot/home/work' '/home/runner/work'
     - name: Sync files to VM
       uses: cross-platform-actions/action@v0.28.0
       with:
