@@ -56,6 +56,7 @@ jobs:
         shutdown_vm: false
         run: |
           pkgman refresh
+          pkgman install -y subversion git perl gawk make pkgconfig mpg123_devel libogg_devel libvorbis_devel flac_devel libsndfile_devel portaudio_devel libsdl2_devel autoconf autoconf_archive libtool libtool_libltdl doxygen help2man
     - name: Fixup VM
       uses: cross-platform-actions/action@v0.28.0
       with:
@@ -104,9 +105,7 @@ jobs:
           ls -la
           sudo touch foo
           ls -la
-          git init .
-          git fetch --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${GITHUB_REF_NAME}
-          git checkout --force -B ${GITHUB_REF_NAME} refs/remotes/origin/${GITHUB_REF_NAME}
+          git log
           pwd
           ls -al
           ls -la /boot/
