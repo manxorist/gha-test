@@ -44,6 +44,7 @@ jobs:
         sync_files: runner-to-vm
         shutdown_vm: false
         run: |
+          ls -la /boot/home/
           ls -la
           git status
     - name: Shutdown VM
