@@ -34,18 +34,18 @@ jobs:
         echo $GITHUB_SERVER_URL
         echo $GITHUB_SHA
     - name: Startup VM
-      uses: cross-platform-actions/action@v0.28.0
+      uses: cross-platform-actions/action@v0.29.0
       with:
         architecture: x86_64
         memory: 4G
         operating_system: haiku
         version: ${{matrix.version}}
         shell: bash
-        sync_files: false
+        sync_files: runner-to-vm
         shutdown_vm: false
-        run: true
+        run: git status
     - name: Install dependencies
-      uses: cross-platform-actions/action@v0.28.0
+      uses: cross-platform-actions/action@v0.29.0
       with:
         architecture: x86_64
         memory: 4G
@@ -57,33 +57,8 @@ jobs:
         run: |
           pkgman refresh
           pkgman install -y subversion git perl gawk make pkgconfig mpg123_devel libogg_devel libvorbis_devel flac_devel libsndfile_devel portaudio_devel libsdl2_devel autoconf autoconf_archive libtool libtool_libltdl doxygen help2man
-    - name: Fixup VM
-      uses: cross-platform-actions/action@v0.28.0
-      with:
-        architecture: x86_64
-        memory: 4G
-        operating_system: haiku
-        version: ${{matrix.version}}
-        shell: bash
-        sync_files: false
-        shutdown_vm: false
-        run: |
-          pwd
-          mv '/home/runner/work' '/boot/home/work'
-          ln -sf '/boot/home/work' '/home/runner/work'
-    - name: Sync files to VM
-      uses: cross-platform-actions/action@v0.28.0
-      with:
-        architecture: x86_64
-        memory: 4G
-        operating_system: haiku
-        version: ${{matrix.version}}
-        shell: bash
-        sync_files: runner-to-vm
-        shutdown_vm: false
-        run: chown -R $(id -u):$(id -g) $(pwd)
     - name: Build
-      uses: cross-platform-actions/action@v0.28.0
+      uses: cross-platform-actions/action@v0.29.0
       with:
         architecture: x86_64
         memory: 4G
@@ -118,7 +93,7 @@ jobs:
           autoconf --help
           automake --help
     - name: Shutdown VM
-      uses: cross-platform-actions/action@v0.28.0
+      uses: cross-platform-actions/action@v0.29.0
       with:
         architecture: x86_64
         memory: 4G
