@@ -22,18 +22,18 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Dump GitHub
-      run: |
-        echo $GITHUB_BASE_REF
-        echo $GITHUB_HEAD_REF
-        echo $GITHUB_REF
-        echo $GITHUB_REF_NAME
-        echo $GITHUB_REF_PROTECTED
-        echo $GITHUB_REF_TYPE
-        echo $GITHUB_REPOSITORY
-        echo $GITHUB_SERVER_URL
-        echo $GITHUB_SHA
     - name: Startup VM
+      uses: cross-platform-actions/action@v0.29.0
+      with:
+        architecture: x86_64
+        memory: 4G
+        operating_system: haiku
+        version: ${{matrix.version}}
+        shell: bash
+        sync_files: false
+        shutdown_vm: false
+        run: true
+    - name: Sync files to VM
       uses: cross-platform-actions/action@v0.29.0
       with:
         architecture: x86_64
@@ -44,56 +44,7 @@ jobs:
         sync_files: runner-to-vm
         shutdown_vm: false
         run: |
-          chown -R $(id -u):$(id -g) $(pwd)
           git status
-    - name: Install dependencies
-      uses: cross-platform-actions/action@v0.29.0
-      with:
-        architecture: x86_64
-        memory: 4G
-        operating_system: haiku
-        version: ${{matrix.version}}
-        shell: bash
-        sync_files: false
-        shutdown_vm: false
-        run: |
-          pkgman refresh
-          pkgman install -y subversion git perl gawk make pkgconfig mpg123_devel libogg_devel libvorbis_devel flac_devel libsndfile_devel portaudio_devel libsdl2_devel autoconf autoconf_archive libtool libtool_libltdl doxygen help2man
-    - name: Build
-      uses: cross-platform-actions/action@v0.29.0
-      with:
-        architecture: x86_64
-        memory: 4G
-        operating_system: haiku
-        version: ${{matrix.version}}
-        shell: bash
-        sync_files: false
-        shutdown_vm: false
-        run: |
-          rm -rf '/home/runner/work'
-          mkdir -p '/home/runner/' && ln -sf '/boot/home/work' '/home/runner/work' && mkdir -p '/home/runner/work/gha-test/gha-test'
-          cd '/home/runner/work/gha-test/gha-test'
-          pwd
-          df -h .
-          df -h
-          whoami
-          ls -la
-          mkdir baz
-          ls -la
-          sudo touch foo
-          ls -la
-          git log
-          pwd
-          ls -al
-          ls -la /boot/
-          ls -la /boot/home/
-          ls -la /home/
-          ls -la /home/runner/
-          ls -la /home/runner/work/
-          ls -la /home/runner/work/gha-test/
-          ls -la /system/packages/administrative/
-          autoconf --help
-          automake --help
     - name: Shutdown VM
       uses: cross-platform-actions/action@v0.29.0
       with:
