@@ -1,0 +1,31 @@
+name: VFX Reference Makefile
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { deps: sys   }
+          - { deps: local }
+          - { deps: small }
+
+    concurrency:
+      group: ${{ github.ref }}-${{ github.workflow }}-${{matrix.deps}}
+      cancel-in-progress: true
+
+    runs-on: ubuntu-latest
+    container:
+      image: aswf/ci-vfxall:2024
+
+    steps:
+    - name: fix git
+      # https://github.com/actions/runner/issues/2033
+      run: chown -R $(id -u):$(id -g) $(pwd)
