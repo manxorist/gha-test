@@ -38,6 +38,14 @@ jobs:
     - name: Sync files to VM
       shell: cpa.sh {0} --sync-files runner-to-vm
       run: true
+    - name: Update system
+      shell: cpa.sh {0} --sync-files none
+      run: |
+        pkgman refresh
+        pkgman full-sync
+    - name: Reboot VM
+      shell: cpa.sh {0} --sync-files none --reboot
+      run: true
     - name: Install dependencies
       shell: cpa.sh {0} --sync-files none
       run: |
