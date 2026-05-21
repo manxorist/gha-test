@@ -42,7 +42,7 @@ jobs:
       shell: cpa.sh {0} --sync-files none
       run: |
         pkgman refresh
-        pkgman full-sync
+        pkgman full-sync -y
     - name: Reboot VM
       shell: cpa.sh {0} --sync-files none --reboot
       run: true
