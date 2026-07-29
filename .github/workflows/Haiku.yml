@@ -31,7 +31,8 @@ jobs:
     - name: Update system
       shell: cpa.sh {0} --sync-files none
       run: |
-        pkgman add https://eu.hpkg.haiku-os.org/haiku/master/$(getarch)/current
+        pkgman --help
+        pkgman add -y https://eu.hpkg.haiku-os.org/haiku/master/$(getarch)/current
         pkgman refresh
         pkgman full-sync -y
     - name: Reboot VM
