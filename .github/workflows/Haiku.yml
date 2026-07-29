@@ -22,7 +22,7 @@ jobs:
         architecture: x86_64
         memory: 4G
         operating_system: haiku
-        version: ${{matrix.version}}
+        version: r1beta5
         shell: bash
         sync_files: false
     - name: Sync files to VM
