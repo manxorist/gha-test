@@ -32,8 +32,8 @@ jobs:
       shell: cpa.sh {0} --sync-files none
       run: |
         pkgman list-repos
-        pkgman add-repo https://eu.hpkg.haiku-os.org/haiku/master/$(getarch)/current -y
-        pkgman add-repo https://eu.hpkg.haiku-os.org/haikuports/master/$(getarch)/current -y
+        yes yes | pkgman add-repo https://eu.hpkg.haiku-os.org/haiku/master/$(getarch)/current
+        yes yes | pkgman add-repo https://eu.hpkg.haiku-os.org/haikuports/master/$(getarch)/current
         pkgman list-repos
         pkgman refresh
         pkgman full-sync -y
