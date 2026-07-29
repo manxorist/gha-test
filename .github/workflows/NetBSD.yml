@@ -40,5 +40,5 @@ jobs:
     - name: Install dependencies
       shell: cpa.sh {0} --sync-files none
       run: |
-        sudo pkgin -y update
-        sudo pkgin -y full-upgrade
+        sudo pkgin -y update || cat /var/db/pkgin/pkg_install-err.log
+        sudo pkgin -y full-upgrade || cat /var/db/pkgin/pkg_install-err.log
