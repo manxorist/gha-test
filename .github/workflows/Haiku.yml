@@ -31,7 +31,8 @@ jobs:
     - name: Update system
       shell: cpa.sh {0} --sync-files none
       run: |
-        pkgman --help
+        pkgman list-repos
+        pkgman info haiku
         pkgman add -y https://eu.hpkg.haiku-os.org/haiku/master/$(getarch)/current
         pkgman refresh
         pkgman full-sync -y
