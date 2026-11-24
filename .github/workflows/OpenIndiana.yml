@@ -1,0 +1,59 @@
+name: OpenIndiana Makefile
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    timeout-minutes: 120
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { version: '2026.10.30', current: false, deps: sys   }
+          - { version: '2026.10.30', current: false, deps: local }
+          - { version: '2026.10.30', current: false, deps: small }
+          - { version: '2026.10.30', current: true , deps: sys   }
+          - { version: '2026.10.30', current: true , deps: local }
+          - { version: '2026.10.30', current: true , deps: small }
+
+    concurrency:
+      group: ${{github.ref}}-${{github.workflow}}-${{matrix.version}}-${{matrix.current}}-${{matrix.deps}}
+      cancel-in-progress: true
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+    - name: Startup VM
+      uses: cross-platform-actions/action@v1.8.0
+      with:
+        architecture: x86_64
+        memory: 4G
+        operating_system: haiku
+        version: ${{matrix.version}}
+        shell: bash
+        sync_files: false
+    - name: Sync files to VM
+      shell: cpa.sh {0} --sync-files runner-to-vm
+      run: true
+    - name: Update system
+      if: matrix.current
+      shell: cpa.sh {0} --sync-files none
+      run: |
+        sudo pkg update --accept
+    - name: Reboot VM
+      shell: cpa.sh {0} --sync-files none --reboot
+      run: true
+    - name: Install dependencies
+      shell: cpa.sh {0} --sync-files none
+      run: |
+        sudo pkg install --accept metapackages/build-essential developer/versioning/subversion developer/versioning/git text/gawk developer/build/gnu-make developer/build/pkg-config audio/mpg123 library/libogg library/libvorbis codec/flac library/libsndfile library/sdl2 developer/build/autoconf developer/build/autoconf-archive developer/build/automake developer/build/libtool library/libtool/libltdl developer/build/help2man developer/documentation-tool/doxygen library/audio/pulseaudio
+    - name: Reboot VM
+      shell: cpa.sh {0} --sync-files none --reboot
+      run: true
