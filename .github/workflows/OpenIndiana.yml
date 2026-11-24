@@ -14,9 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { version: '2026.10.30', current: false, deps: sys   }
-          - { version: '2026.10.30', current: false, deps: local }
-          - { version: '2026.10.30', current: false, deps: small }
           - { version: '2026.10.30', current: true , deps: sys   }
           - { version: '2026.10.30', current: true , deps: local }
           - { version: '2026.10.30', current: true , deps: small }
@@ -48,6 +45,7 @@ jobs:
       run: |
         sudo pkg update --accept
     - name: Reboot VM
+      if: matrix.current
       shell: cpa.sh {0} --sync-files none --reboot
       run: true
     - name: Install dependencies
