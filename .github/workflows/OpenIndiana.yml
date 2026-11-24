@@ -31,11 +31,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v7
     - name: Startup VM
-      uses: cross-platform-actions/action@v1.8.0
+      uses: cross-platform-actions/action@7037457d8fb8a439e85b4a6da7b4b44566523be0
       with:
         architecture: x86_64
         memory: 4G
-        operating_system: haiku
+        operating_system: openindiana
         version: ${{matrix.version}}
         shell: bash
         sync_files: false
