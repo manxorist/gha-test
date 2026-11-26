@@ -94,7 +94,15 @@ jobs:
     - name: Install dependencies
       shell: cpa.sh {0} --sync-files none
       run: |
-        sudo pkg install --accept metapackages/build-essential developer/versioning/subversion developer/versioning/git text/gawk developer/build/gnu-make developer/build/pkg-config audio/mpg123 library/libogg library/libvorbis codec/flac library/libsndfile library/sdl2 developer/build/autoconf developer/build/autoconf-archive developer/build/automake developer/build/libtool library/libtool/libltdl developer/build/help2man developer/documentation-tool/doxygen library/audio/pulseaudio
+        sudo pkg purge-history
+        sudo pkg install --accept metapackages/build-essential
+        sudo pkg purge-history
+        sudo pkg install --accept developer/versioning/subversion developer/versioning/git
+        sudo pkg purge-history
+        sudo pkg install --accept text/gawk developer/build/gnu-make developer/build/pkg-config developer/build/autoconf developer/build/autoconf-archive developer/build/automake developer/build/libtool library/libtool/libltdl developer/build/help2man developer/documentation-tool/doxygen
+        sudo pkg purge-history
+        sudo pkg install --accept audio/mpg123 library/libogg library/libvorbis codec/flac library/libsndfile library/sdl2 library/audio/pulseaudio
+        sudo pkg purge-history
     - name: Info
       shell: cpa.sh {0} --sync-files none
       run: |
@@ -112,7 +120,7 @@ jobs:
     - name: Cleanup pkg files
       shell: cpa.sh {0} --sync-files none
       run: |
-        sudo pk purge-history
+        sudo pkg purge-history
     - name: Info
       shell: cpa.sh {0} --sync-files none
       run: |
