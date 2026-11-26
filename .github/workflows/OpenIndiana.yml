@@ -37,7 +37,7 @@ jobs:
     - name: Set compression
       shell: cpa.sh {0} --sync-files none
       run: |
-        zfs set compression=gzip-9 rpool
+        sudo zfs set compression=gzip-9 rpool
     - name: Sync files to VM
       shell: cpa.sh {0} --sync-files runner-to-vm
       run: true
