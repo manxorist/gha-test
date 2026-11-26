@@ -44,6 +44,13 @@ jobs:
         sudo zpool list
         sudo zfs list
         sudo zpool status
+        sudo zfs get compression,compressratio rpool
+        sudo zfs get compression,compressratio rpool/ROOT
+        sudo zfs get compression,compressratio rpool/ROOT/openindiana
+        sudo zfs get compression,compressratio rpool/ROOT/openindiana/var
+        sudo zfs get compression,compressratio rpool/export
+        sudo zfs get compression,compressratio rpool/export/home
+        sudo zfs get compression,compressratio rpool/export/home/runner
     - name: Update system
       if: matrix.current
       shell: cpa.sh {0} --sync-files none
