@@ -60,15 +60,11 @@ jobs:
       if: matrix.current
       shell: cpa.sh {0} --sync-files none --reboot
       run: true
-    - name: Install beadm
-      shell: cpa.sh {0} --sync-files none --reboot
-      run: |
-        sudo pkg install --accept install/beadm
     - name: Cleanup build environments
       if: matrix.current
       run: |
-        sudo beadm list -H
-        sudo beadm list -H | awk -F';' '$3 !~ /[NR]/ {print $1}' | head -n -2 | xargs -r -n 1 sudo beadm destroy -F
+        sudo - beadm list -H
+        sudo - beadm list -H | awk -F';' '$3 !~ /[NR]/ {print $1}' | head -n -2 | xargs -r -n 1 sudo beadm destroy -F
     - name: Install dependencies
       shell: cpa.sh {0} --sync-files none
       run: |
