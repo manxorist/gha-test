@@ -71,7 +71,7 @@ jobs:
     - name: Cleanup pkg files
       shell: cpa.sh {0} --sync-files none
       run: |
-        sudo purge-history
+        sudo pkg purge-history
     - name: Cleanup swap
       shell: cpa.sh {0} --sync-files none
       run: |
@@ -112,7 +112,7 @@ jobs:
     - name: Cleanup pkg files
       shell: cpa.sh {0} --sync-files none
       run: |
-        sudo purge-history
+        sudo pk purge-history
     - name: Info
       shell: cpa.sh {0} --sync-files none
       run: |
