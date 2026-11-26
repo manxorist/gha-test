@@ -81,7 +81,7 @@ jobs:
       shell: cpa.sh {0} --sync-files none
       run: |
         sudo /usr/sbin/beadm list -H
-        sudo /usr/sbin/beadm list -H | awk -F';' '$3 !~ /[NR]/ {print $1}' | head -n -2 | xargs -r -n 1 sudo /usr/sbin/beadm destroy -F
+        sudo /usr/sbin/beadm list -H | tr ';' ' ' | grep -v ' NR ' | awk '{print $1;}' | xargs -n 1 sudo /usr/sbin/beadm destroy -F
     - name: Info
       shell: cpa.sh {0} --sync-files none
       run: |
