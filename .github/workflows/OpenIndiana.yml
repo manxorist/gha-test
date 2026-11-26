@@ -63,7 +63,7 @@ jobs:
     - name: Install beadm
       shell: cpa.sh {0} --sync-files none --reboot
       run: |
-        sudo pkg install install/beadm
+        sudo pkg install --accept install/beadm
     - name: Cleanup build environments
       if: matrix.current
       run: |
