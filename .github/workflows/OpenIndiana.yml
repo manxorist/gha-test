@@ -60,6 +60,11 @@ jobs:
       if: matrix.current
       shell: cpa.sh {0} --sync-files none --reboot
       run: true
+    - name: Cleanup swap
+      shell: cpa.sh {0} --sync-files none --reboot
+      run: |
+        sudo swap -d /dev/zvol/dsk/rpool/swap
+        sudo zfs destroy rpool/swap
     - name: Info
       shell: cpa.sh {0} --sync-files none
       run: |
