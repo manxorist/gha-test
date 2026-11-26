@@ -39,7 +39,11 @@ jobs:
       run: true
     - name: Info
       shell: cpa.sh {0} --sync-files none
-      run: df -h
+      run: |
+        sudo df -h
+        sudo zpool list
+        sudo zfs list
+        sudo zpool status
     - name: Update system
       if: matrix.current
       shell: cpa.sh {0} --sync-files none
@@ -49,6 +53,10 @@ jobs:
       if: matrix.current
       shell: cpa.sh {0} --sync-files none --reboot
       run: true
+    - name: Install beadm
+      shell: cpa.sh {0} --sync-files none --reboot
+      run: |
+        sudo pkg install install/beadm
     - name: Cleanup build environments
       if: matrix.current
       run: |
