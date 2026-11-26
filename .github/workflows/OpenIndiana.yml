@@ -14,12 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { version: '2026.10.30', current: false , deps: sys   }
-          - { version: '2026.10.30', current: false, deps: local }
-          - { version: '2026.10.30', current: false, deps: small }
           - { version: '2026.10.30', current: true , deps: sys   }
-          - { version: '2026.10.30', current: true , deps: local }
-          - { version: '2026.10.30', current: true , deps: small }
 
     concurrency:
       group: ${{github.ref}}-${{github.workflow}}-${{matrix.version}}-${{matrix.current}}-${{matrix.deps}}
@@ -42,6 +37,9 @@ jobs:
     - name: Sync files to VM
       shell: cpa.sh {0} --sync-files runner-to-vm
       run: true
+    - name: Info
+      shell: cpa.sh {0} --sync-files none
+      run: df -h
     - name: Update system
       if: matrix.current
       shell: cpa.sh {0} --sync-files none
