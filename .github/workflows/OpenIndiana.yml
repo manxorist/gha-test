@@ -34,6 +34,10 @@ jobs:
         version: ${{matrix.version}}
         shell: bash
         sync_files: false
+    - name: Set compression
+      shell: cpa.sh {0} --sync-files none
+      run: |
+        zfs set compression=gzip-9 rpool
     - name: Sync files to VM
       shell: cpa.sh {0} --sync-files runner-to-vm
       run: true
@@ -61,7 +65,7 @@ jobs:
       shell: cpa.sh {0} --sync-files none --reboot
       run: true
     - name: Cleanup swap
-      shell: cpa.sh {0} --sync-files none --reboot
+      shell: cpa.sh {0} --sync-files none
       run: |
         sudo swap -d /dev/zvol/dsk/rpool/swap
         sudo zfs destroy rpool/swap
