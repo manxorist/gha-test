@@ -97,6 +97,8 @@ jobs:
         sudo pkg purge-history
         sudo pkg install --accept archiver/gnu-tar compress/bzip2 compress/gzip compress/p7zip compress/xz developer/as developer/assembler/nasm developer/assembler/yasm developer/build/gnu-make developer/build/libtool developer/build/make developer/build/pkg-config developer/gnu-binutils developer/linker file/gnu-coreutils file/gnu-findutils library/libtool/libltdl system/header system/header/header-audio text/gawk text/gnu-diffutils text/gnu-grep text/gnu-patch text/gnu-sed
         sudo pkg purge-history
+        sudo pkg install --accept developer/illumos-closed developer/opensolaris/osnet 
+        sudo pkg install --accept data/docbook text/texinfo 
         sudo pkg install --accept metapackages/build-essential
         sudo pkg purge-history
         sudo pkg install --accept developer/versioning/subversion developer/versioning/git
